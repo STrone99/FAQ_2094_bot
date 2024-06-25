@@ -10,7 +10,8 @@ database_directory = os.path.join(current_directory, 'database')
 database = f'{database_directory}//FAQ_bot.db'
 mess_id = None
 
-bot = telebot.TeleBot('7463447667:AAEKdNXJfAIeLTgtErXoeiYdV3zFXAY4a0c')
+bot = telebot.TeleBot('6714731566:AAHApxAwpfiPsan-VXQJwUOEV0bA9lfvFP4')
+bot.remove_webhook()
 try:
     class DB():
         def create_db():
@@ -28,46 +29,61 @@ try:
 
     def main_menu(message):
         markup = InlineKeyboardMarkup(row_width=1)
-        button1 = InlineKeyboardButton("👨‍💼Директор", callback_data="button_dir")
-        button2 = InlineKeyboardButton("👩‍💼Заместители директора", callback_data="button_zamdir")
-        button3 = InlineKeyboardButton("📎Раздел МФЦ", callback_data="button_MFC")
-        button4 = InlineKeyboardButton("👩‍🏫Дополнительное образование", callback_data="button_DO")
-        button5 = InlineKeyboardButton("😋Питание", callback_data="button_eat")
-        button6 = InlineKeyboardButton("🏫Общее", callback_data="button_all")
-        markup.add(button1, button2, button3, button4, button5, button6)
+        button1 = InlineKeyboardButton("Поступление/зачисление", callback_data="button_input")
+        button2 = InlineKeyboardButton("Лето в детском саду", callback_data="button_zamdir")
+        button3 = InlineKeyboardButton("Организационные вопросы. 2024-2025 учебный год", callback_data="button_MFC")
+        button4 = InlineKeyboardButton("МФЦ", callback_data="button_DO")
+        button5 = InlineKeyboardButton("Прочие вопросы/задать вопрос в чате", callback_data="button_eat")
+        markup.add(button1, button2, button3, button4, button5)
         
         bot.send_message(message.chat.id, "Выберите раздел:", reply_markup=markup)
         
-    def dir_menu(message):
+    def input_menu(message):
         markup = InlineKeyboardMarkup(row_width=1)
-        button1 = InlineKeyboardButton("Как попасть на прием к директору?", callback_data="button_dir_1")
-        button2 = InlineKeyboardButton("Как задать вопрос директору?", callback_data="button_dir_2")
+        button1 = InlineKeyboardButton("Детский сад (дошкольное отделение)", callback_data="button_input_1")
+        button2 = InlineKeyboardButton("Поступление в 1 класс", callback_data="button_input_2")
+        button3 = InlineKeyboardButton("Поступление в 10 класс", callback_data="button_input_3")
+        button4 = InlineKeyboardButton("Перевод во 2-11 классы", callback_data="button_input_4")
+        button5 = InlineKeyboardButton('На mos.ru пришел ответ "готов к зачислению". Что дальше?', callback_data="button_input_5")
+        button6 = InlineKeyboardButton("Что купить?", callback_data="button_input_6")
+        button6 = InlineKeyboardButton("Задать вопрос старшему воспитателю/администрации", callback_data="button_input_6")
+        button_back = InlineKeyboardButton("Назад", callback_data="button_back")
+        markup.add(button1, button2, button3, button4, button5, button6, button_back)
+        
+        bot.send_message(message.chat.id, "Выберите ваш вопрос:", reply_markup=markup)
+        
+    def leto_menu(message):
+        markup = InlineKeyboardMarkup(row_width=1)
+        button1 = InlineKeyboardButton("График работы дошкольных площадок", callback_data="button_leto_1")
+        button2 = InlineKeyboardButton("Задать вопрос старшему воспитателю/администрации", callback_data="button_leto_2")
         button_back = InlineKeyboardButton("Назад", callback_data="button_back")
         markup.add(button1, button2, button_back)
         
         bot.send_message(message.chat.id, "Выберите ваш вопрос:", reply_markup=markup)
-        
-    def zamdir_menu(message):
+
+    def new_year_menu(message):
         markup = InlineKeyboardMarkup(row_width=1)
-        button1 = InlineKeyboardButton("Какие направления курируют заместители директора?", callback_data="button_zamdir_1")
-        button2 = InlineKeyboardButton("Как попасть на прием к директору?", callback_data="button_zamdir_2")
-        button3 = InlineKeyboardButton("Как задать вопрос директору?", callback_data="button_zamdir_3")
-        button_back = InlineKeyboardButton("Назад", callback_data="button_back")
-        markup.add(button1, button2, button3, button_back)
+        button1 = InlineKeyboardButton("График каникул", callback_data="button_year_1")
+        button2 = InlineKeyboardButton("1 сентября / День знаний", callback_data="button_year_2")
+        button3 = InlineKeyboardButton("Родительские собрания/знакомство с новыми учителями", callback_data="button_year_3")
+        button4 = InlineKeyboardButton("Подвоз (школьный автобус)", callback_data="button_year_4")
+        button5 = InlineKeyboardButton("Будет ли 2-я смена", callback_data="button_year_5")
+        button6 = InlineKeyboardButton("Открытие новых образовательных площадок", callback_data="button_year_6")
+        markup.add(button1, button2, button3, button4, button5, button6)
         
         bot.send_message(message.chat.id, "Выберите ваш вопрос:", reply_markup=markup)
-        
+
     def MFC_menu(message):
         markup = InlineKeyboardMarkup(row_width=1)
         button01 = InlineKeyboardButton("Поступление в 1-класс", callback_data="button_MFC_01")
         button02 = InlineKeyboardButton("Как перевести ребенка во 2-11 класс", callback_data="button_MFC_02")
         button1 = InlineKeyboardButton("Контакты специалистов", callback_data="button_MFC_1")
         button2 = InlineKeyboardButton("График приема", callback_data="button_MFC_2")
-        button3 = InlineKeyboardButton("Как распределяется классы?", callback_data="button_MFC_3")
+        button3 = InlineKeyboardButton("Как распределяются классы?", callback_data="button_MFC_3")
         button4 = InlineKeyboardButton("Можно ли выбрать площадку самостоятельно?", callback_data="button_MFC_4")
         button5 = InlineKeyboardButton("Как отчислить из школы?", callback_data="button_MFC_5")
         button6 = InlineKeyboardButton("Как поменять образовательную площадку?", callback_data="button_MFC_6")
-        button7 = InlineKeyboardButton("Как поменять класс в рамках одной параллели?", callback_data="button_MFC_7")
+        button7 = InlineKeyboardButton("Как поменять класс в пределах одной параллели?", callback_data="button_MFC_7")
         button8 = InlineKeyboardButton("Как перевестись из одной школьной площадки в другую?", callback_data="button_MFC_8")
         button9 = InlineKeyboardButton("Как получить справку о том, что ребенок учится в школе?", callback_data="button_MFC_9")
         button10 = InlineKeyboardButton("Как получить выписку оценок?", callback_data="button_MFC_10")
@@ -78,28 +94,13 @@ try:
         
         bot.send_message(message.chat.id, "Выберите ваш вопрос:", reply_markup=markup)
 
-    def first_class_menu(message):
+    def question_menu(message):
         markup = InlineKeyboardMarkup(row_width=1)
-        button1 = InlineKeyboardButton("Как узнать своего учителя?", callback_data="button_firstclass_1")
-        button2 = InlineKeyboardButton("Можно ли выбрать учителя?", callback_data="button_firstclass_2")
-        button3 = InlineKeyboardButton("Набор первоклассника", callback_data="button_firstclass_3")
-        button4 = InlineKeyboardButton("Какая программа обучения?", callback_data="button_firstclass_4")
-        button_back = InlineKeyboardButton("Назад", callback_data="button_back_MFC")
-        markup.add(button1, button2, button3, button4, button_back)
-        
-        bot.send_message(message.chat.id, "Выберите ваш вопрос:", reply_markup=markup)
-
-    def class_menu(message):
-        markup = InlineKeyboardMarkup(row_width=1)
-        button1 = InlineKeyboardButton("Как поменять группу по английскому языку?", callback_data="button_class_1")
-        button2 = InlineKeyboardButton("Как перевести ребенка во 2-11 класс?", callback_data="button_class_2")
-        button3 = InlineKeyboardButton("Как поменять группу по информатике?", callback_data="button_class_3")
-        button4 = InlineKeyboardButton("Как поменять класс ?", callback_data="button_class_4")
-        button5 = InlineKeyboardButton("Направления обучения с 5-го класса", callback_data="button_class_5")
-        button6 = InlineKeyboardButton("Направления обучения с 10-го класса", callback_data="button_class_6")
-        button7 = InlineKeyboardButton("Как поменять класс ?", callback_data="button_class_7")
-        button_back = InlineKeyboardButton("Назад", callback_data="button_back_MFC")
-        markup.add(button1, button2, button3, button4, button5, button6, button7, button_back)
+        button01 = InlineKeyboardButton("Поступление в 1-класс", callback_data="button_MFC_01")
+        button02 = InlineKeyboardButton("Как перевести ребенка во 2-11 класс", callback_data="button_MFC_02")
+        button1 = InlineKeyboardButton("Контакты специалистов", callback_data="button_MFC_1")
+        button2 = InlineKeyboardButton("График приема", callback_data="button_MFC_2")
+        markup.add(button01, button02, button1, button2)
         
         bot.send_message(message.chat.id, "Выберите ваш вопрос:", reply_markup=markup)
 
@@ -109,9 +110,9 @@ try:
         main_menu(message)
         
     #Кнопка Директор
-    @bot.callback_query_handler(func=lambda call: call.data == "button_dir")
+    @bot.callback_query_handler(func=lambda call: call.data == "button_input")
     def handle_callback(call):
-        dir_menu(call.message)
+        input_menu(call.message)
         bot.delete_message(call.message.chat.id, call.message.message_id)
 
     #Кнопка Заместитель директора
@@ -142,7 +143,7 @@ try:
     @bot.callback_query_handler(func=lambda call: call.data == "button_dir_1")
     def handle_callback(call):
         bot.delete_message(call.message.chat.id, call.message.message_id)
-        bot.send_message(call.message.chat.id, "Здесь будет описание данного пункта!\n\n*Чтобы вернуться в основное меню нажмите на* /start", parse_mode='Markdown')
+        bot.send_message(call.message.chat.id, '[Example Website](https://example.com)', parse_mode='Markdown')
     @bot.callback_query_handler(func=lambda call: call.data == "button_dir_2")
     def handle_callback(call):
         bot.delete_message(call.message.chat.id, call.message.message_id)
